@@ -1,0 +1,26 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "difference seeker",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "gendiff"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/derban7ikus/frontend-project-lvl2.git"
+  },
+  "author": "Derby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/derban7ikus/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/derban7ikus/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^9.0.0"
+  },
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  }
+}
