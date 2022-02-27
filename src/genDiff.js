@@ -37,22 +37,23 @@ const genDiff = (filepath1, filepath2) => {
     const result = [];
     for (const key of keys) {
       if (isInFirstObjectOnly(obj1, obj2, key)) {
-        result.push([ `- ${key}: ${obj1[ key ]}` ])
+        result.push([ `- ${key}: ${obj1[ key ]}` ]);
       } else if (isInSecondObjectOnly(obj1, obj2, key)) {
-        result.push([ `+ ${key}: ${obj2[ key ]}` ])
+        result.push([ `+ ${key}: ${obj2[ key ]}` ]);
       } else if (isInBothObjects(obj1, obj2, key) && obj1[ key ] === obj2[ key ]) {
-        result.push([ `  ${key}: ${obj1[ key ]}` ])
+        result.push([ `  ${key}: ${obj1[ key ]}` ]);
       } else {
         result.push([ `- ${key}: ${obj1[ key ]}` ]);
-        result.push([ `+ ${key}: ${obj2[ key ]}` ])
+        result.push([ `+ ${key}: ${obj2[ key ]}` ]);
       }
-    };
+    }
     return result.join(`
     `);
   };
+
   return `{
     ${diffSeeker(sortedKeys)}
-}`
+}`;
 };
 
 export default genDiff;
