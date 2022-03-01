@@ -1,33 +1,10 @@
-import { readFileSync } from 'fs';
-import path from 'path';
 import _ from 'lodash';
-
-const isInFirstObjectOnly = (object1, object2, key) => {
-  if (Object.hasOwn(object1, key) && !Object.hasOwn(object2, key)) {
-    return true;
-  }
-  return false;
-};
-
-const isInSecondObjectOnly = (object1, object2, key) => {
-  if (!Object.hasOwn(object1, key) && Object.hasOwn(object2, key)) {
-    return true;
-  }
-  return false;
-};
-
-const isInBothObjects = (object1, object2, key) => {
-  if (Object.hasOwn(object1, key) && Object.hasOwn(object2, key)) {
-    return true;
-  }
-  return false;
-};
+import { isInFirstObjectOnly, isInSecondObjectOnly, isInBothObjects } from './objectKeySeeker.js';
+import parser from './parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
-  const absolutePath = (partPath) => path.resolve(process.cwd(), partPath);
-
-  const obj1 = JSON.parse(readFileSync(absolutePath(filepath1), 'utf8'));
-  const obj2 = JSON.parse(readFileSync(absolutePath(filepath2), 'utf8'));
+  const obj1 = parser(filepath1);
+  const obj2 = parser(filepath2);
 
   const mergedObject = _.merge({}, obj1, obj2);
   const mergedKeys = Object.keys(mergedObject);
