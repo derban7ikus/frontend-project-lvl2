@@ -9,7 +9,9 @@ const parser = (filepath) => {
 
   if (format === '.yml' || format === '.yaml') {
     return yaml.load(data);
-  } return JSON.parse(data);
+  } if (format === '.json') {
+    return JSON.parse(data);
+  } throw new Error('Unknown format');
 };
 
 export default parser;
