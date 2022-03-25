@@ -13,7 +13,7 @@ const plain = (data) => {
     .filter((element) => element.type !== 'bothEqual')
     .map((element) => {
       const key = parent ? `${parent}.${element.keey}` : element.keey;
-      const {value} = element;
+      const { value } = element;
       const value1 = element.val1;
       const value2 = element.val2;
 
