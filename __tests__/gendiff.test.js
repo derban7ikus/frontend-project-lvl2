@@ -10,10 +10,10 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 const cases = [
-  [ 'bigFile1.json', 'bigFile2.json', 'jsonresult.txt', 'json' ],
-  [ 'bigFile1.yaml', 'bigFile2.yaml', 'stylishresult.txt', 'stylish' ],
-  [ 'bigFile1.json', 'bigFile2.json', 'stylishresult.txt', 'stylish' ],
-  [ 'bigFile1.json', 'bigFile2.json', 'plainresult.txt', 'plain' ],
+  ['bigFile1.json', 'bigFile2.json', 'jsonresult.txt', 'json'],
+  ['bigFile1.yaml', 'bigFile2.yaml', 'stylishresult.txt', 'stylish'],
+  ['bigFile1.json', 'bigFile2.json', 'stylishresult.txt', 'stylish'],
+  ['bigFile1.json', 'bigFile2.json', 'plainresult.txt', 'plain'],
 ];
 
 test.each(cases)('Each test got to equal correspondent result', (firstArg, secondArg, expectedResult, format) => {
