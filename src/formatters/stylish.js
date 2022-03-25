@@ -1,56 +1,37 @@
-import _ from 'lodash';
-
-const prep = (tree) => {
-  const result = tree.reduce((acc, element) => {
-    const key = element.keey;
-    const val = element.value;
-    const value1 = element.val1;
-    const value2 = element.val2;
-
-    switch (element.type) {
-      case 'recursion':
-        acc[ `${key}` ] = prep(val);
-        return { ...acc };
-      case 'firstObject':
-        acc[ `- ${key}` ] = val;
-        return { ...acc };
-      case 'secondObject':
-        acc[ `+ ${key}` ] = val;
-        return { ...acc };
-      case 'bothEqual':
-        acc[ `${key}` ] = val;
-        return { ...acc };
-      case 'bothNonEqual':
-        acc[ `- ${key}` ] = value1;
-        acc[ `+ ${key}` ] = value2;
-        return { ...acc };
-      default:
-        throw new Error('That type does not exist');
-    };
-  }, {});
-
-  return result;
+const indent = (depth, spaceCount = 4) => ' '.repeat(spaceCount * depth - 2);
+const stringify = (data, treeDepth) => {
+  if (typeof data !== 'object') {
+    return `${data}`;
+  }
+  if (data === null) { return null; }
+  const lines = Object
+    .entries(data)
+    .map(([key, value]) => `${indent(treeDepth + 1)}  ${key}: ${stringify(value, treeDepth + 1)}`);
+  return [
+    '{',
+    ...lines,
+    `${indent(treeDepth)}  }`,
+  ].join('\n');
 };
-
-const stylish = (obj, replacer = ' ', spacesCount = 4) => {
-  const object = prep(obj);
-  const iter = (data, treeDepth = 1) => {
-    if (!_.isObject(data)) {
-      return `${data}`;
-    };
-    const indentSize = spacesCount * treeDepth;
-    const indent = replacer.repeat(indentSize);
-    const closingIndent = () => _.isEqual(object, data) ? `` : `${replacer.repeat(indentSize - spacesCount)}`;
-    const lines = Object
-      .entries(data)
-      .map(([ key, value ]) => {
-        if (key.startsWith('+') || key.startsWith('-')) {
-          return `${replacer.repeat(indentSize - 2)}${key}: ${iter(value, treeDepth + 1)}`;
-        } return `${indent}${key}: ${iter(value, treeDepth + 1)}`
-      });
-    return [ '{', ...lines, `${closingIndent()}}` ].join('\n');
-  };
-  return iter(object);
+const stylish = (innerTree) => {
+  const iter = (tree, depth) => tree.map((node) => {
+    const getValue = (value, sign) => `${indent(depth)}${sign} ${node.key}: ${stringify(value, depth)}\n`;
+    switch (node.type) {
+      case 'secondObject':
+        return getValue(node.val, '+');
+      case 'firstObject':
+        return getValue(node.val, '-');
+      case 'bothEqual':
+        return getValue(node.val, ' ');
+      case 'bothNonEqual':
+        return `${getValue(node.val1, '-')}${getValue(node.val2, '+')}`;
+      case 'recursion':
+        return `${indent(depth)}  ${node.key}: {\n${iter(node.children, depth + 1).join('')}${indent(depth)}  }\n`;
+      default:
+        throw new Error(`Этого типа не существует: ${node.type}`);
+    }
+  });
+  return `{\n${iter(innerTree, 1).join('')}}`;
 };
 
 export default stylish;
