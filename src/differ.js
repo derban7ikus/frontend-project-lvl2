@@ -17,14 +17,7 @@ const differ = (object1, object2) => {
       return { type: 'secondObject', keey: key, value: value2 };
     } if (isInBothObjects(object1, object2, key) && object1[key] === object2[key]) {
       return { type: 'bothEqual', keey: key, value: value1 };
-    }
-    return {
-      type: 'bothNonEqual', 
-      keey: key, 
-      val1: value1, 
-      val2: value2 
-    };
-
+    } return { type: 'bothNonEqual', keey: key, val1: value1, val2: value2 };
   });
   return temp;
 };
