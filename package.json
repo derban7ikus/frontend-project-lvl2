@@ -2,10 +2,10 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "difference seeker",
-  "main": "bin/gendiff.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "gendiff"
+    "test": "npx jest"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "lodash": "^4.17.21"
   },
   "bin": {
-    "gendiff": "./bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "devDependencies": {
     "eslint": "^8.9.0",
