@@ -9,21 +9,15 @@ const prep = (tree) => {
 
     switch (element.type) {
       case 'recursion':
-        acc[ `${key}` ] = prep(val);
-        return { ...acc };
+        return { ...acc, [ key ]: prep(val) };
       case 'firstObject':
-        acc[ `- ${key}` ] = val;
-        return { ...acc };
+        return { ...acc, [ `- ${key}` ]: val };
       case 'secondObject':
-        acc[ `+ ${key}` ] = val;
-        return { ...acc };
+        return { ...acc, [ `+ ${key}` ]: val };
       case 'bothEqual':
-        acc[ `${key}` ] = val;
-        return { ...acc };
+        return { ...acc, [ `${key}` ]: val };
       case 'bothNonEqual':
-        acc[ `- ${key}` ] = value1;
-        acc[ `+ ${key}` ] = value2;
-        return { ...acc };
+        return { ...acc, [ `- ${key}` ]: value1, [ `+ ${key}` ]: value2 };
       default:
         throw new Error('That type does not exist');
     };
