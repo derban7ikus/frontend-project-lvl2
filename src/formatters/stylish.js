@@ -35,7 +35,6 @@ const stylish = (obj, replacer = ' ', spacesCount = 4) => {
     const indentSize = spacesCount * treeDepth;
     const indent = replacer.repeat(indentSize);
     const closingIndent = _.isEqual(object, data) ? '' : `${replacer.repeat(indentSize - spacesCount)}`;
-    const closingIndent = () => (_.isEqual(object, data) ? '' : `${replacer.repeat(indentSize - spacesCount)}`);
     const lines = Object
       .entries(data)
       .map(([key, value]) => {
@@ -44,7 +43,6 @@ const stylish = (obj, replacer = ' ', spacesCount = 4) => {
         } return `${indent}${key}: ${iter(value, treeDepth + 1)}`;
       });
     return ['{', ...lines, `${closingIndent}}`].join('\n');
-    return ['{', ...lines, `${closingIndent()}}`].join('\n');
   };
   return iter(object);
 };
