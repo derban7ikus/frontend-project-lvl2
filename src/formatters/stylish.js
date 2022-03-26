@@ -9,18 +9,18 @@ const prep = (tree) => {
 
     switch (element.type) {
       case 'recursion':
-        return { ...acc, [ key ]: prep(val) };
+        return { ...acc, [key]: prep(val) };
       case 'firstObject':
-        return { ...acc, [ `- ${key}` ]: val };
+        return { ...acc, [`- ${key}`]: val };
       case 'secondObject':
-        return { ...acc, [ `+ ${key}` ]: val };
+        return { ...acc, [`+ ${key}`]: val };
       case 'bothEqual':
-        return { ...acc, [ `${key}` ]: val };
+        return { ...acc, [`${key}`]: val };
       case 'bothNonEqual':
-        return { ...acc, [ `- ${key}` ]: value1, [ `+ ${key}` ]: value2 };
+        return { ...acc, [`- ${key}`]: value1, [`+ ${key}`]: value2 };
       default:
         throw new Error('That type does not exist');
-    };
+    }
   }, {});
 
   return result;
@@ -31,18 +31,18 @@ const stylish = (obj, replacer = ' ', spacesCount = 4) => {
   const iter = (data, treeDepth = 1) => {
     if (!_.isObject(data)) {
       return `${data}`;
-    };
+    }
     const indentSize = spacesCount * treeDepth;
     const indent = replacer.repeat(indentSize);
-    const closingIndent = () => _.isEqual(object, data) ? `` : `${replacer.repeat(indentSize - spacesCount)}`;
+    const closingIndent = _.isEqual(object, data) ? '' : `${replacer.repeat(indentSize - spacesCount)}`;
     const lines = Object
       .entries(data)
-      .map(([ key, value ]) => {
+      .map(([key, value]) => {
         if (key.startsWith('+') || key.startsWith('-')) {
           return `${replacer.repeat(indentSize - 2)}${key}: ${iter(value, treeDepth + 1)}`;
-        } return `${indent}${key}: ${iter(value, treeDepth + 1)}`
+        } return `${indent}${key}: ${iter(value, treeDepth + 1)}`;
       });
-    return [ '{', ...lines, `${closingIndent()}}` ].join('\n');
+    return ['{', ...lines, `${closingIndent}}`].join('\n');
   };
   return iter(object);
 };
